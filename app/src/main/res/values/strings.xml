@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">JustinLab10</string>
+    <string name="design_navigation_drawer_app">Design Navigation Drawer app</string>
+    <string name="justin_copywrite">by Justin Chipman n01598472 ©</string>
 </resources>
