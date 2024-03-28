@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/jusnav_justin"
+        android:enabled="true"
+        android:icon="@drawable/justin_icon"
+        android:title="@string/justin"/>
+    <item
+        android:id="@+id/jusnav_chipman"
+        android:enabled="true"
+        android:icon="@drawable/chipman_icon"
+        android:title="@string/chipman"/>
+    <item
+        android:id="@+id/jusnav_n01598472"
+        android:enabled="true"
+        android:icon="@drawable/n01598472_icon"
+        android:title="@string/n01598472"/>
+    <item
+        android:id="@+id/jusnav_jc"
+        android:enabled="true"
+        android:icon="@drawable/jc_icon"
+        android:title="@string/jc"/>
+</menu>
