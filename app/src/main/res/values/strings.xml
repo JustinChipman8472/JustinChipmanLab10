@@ -8,4 +8,6 @@
     <string name="chipman">Chipman</string>
     <string name="n01598472">N01598472</string>
     <string name="jc">JC</string>
+    <string name="download_image">Download Image</string>
+    <string name="select_image">Select Image</string>
 </resources>
