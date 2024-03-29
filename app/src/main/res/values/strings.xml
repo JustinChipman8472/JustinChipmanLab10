@@ -11,6 +11,8 @@
     <string name="download_image">Download Image</string>
     <string name="select_image">Select Image</string>
     <string name="justin_chipman_n01598472">Justin Chipman N01598472</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
 
     <string-array name="image_urls_array">
         <item>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRabWRuZC53FW8cGFHJk0sjDmJ_-YtxzSRvyAL4WnHTu_-7_ejPmm39v2upcmoDC44oYRDPcCFw7QvUFGe4_W2YAVulO554uQZsenc8oUo</item>
@@ -18,5 +20,28 @@
         <item>https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Porky_Pig.svg/1200px-Porky_Pig.svg.png</item>
         <item>https://m.media-amazon.com/images/I/517COP1I57L._AC_UF894,1000_QL80_.jpg</item>
     </string-array>
+
+        <string-array name="cities">
+            <item>Toronto</item>
+            <item>New York</item>
+            <item>London</item>
+            <item>Tokyo</item>
+            <item>Paris</item>
+        </string-array>
+        <string-array name="city_latitudes">
+            <item>43.7</item>
+            <item>40.7</item>
+            <item>51.5</item>
+            <item>35.6</item>
+            <item>48.8</item>
+        </string-array>
+        <string-array name="city_longitudes">
+            <item>-79.4</item>
+            <item>-74.0</item>
+            <item>-0.1</item>
+            <item>139.6</item>
+            <item>2.3</item>
+        </string-array>
+
 
 </resources>
