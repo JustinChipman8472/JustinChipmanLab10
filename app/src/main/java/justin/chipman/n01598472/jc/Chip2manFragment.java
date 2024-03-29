@@ -29,6 +29,7 @@ public class Chip2manFragment extends Fragment {
     private Spinner citySpinner;
     private RadioGroup temperatureUnitRadioGroup;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+    private String latestWeatherJson;
 
     // Replace YOUR_API_KEY with your actual OpenWeatherMap API key
     private final String API_KEY = "4a9109aa76c6113b14442edfa8e68d27";
@@ -69,6 +70,15 @@ public class Chip2manFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+
+        temperatureUnitRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (latestWeatherJson != null && !latestWeatherJson.isEmpty()) {
+                    updateWeatherInfo(latestWeatherJson);
+                }
+            }
+        });
     }
 
     private void fetchWeatherData(String lat, String lon) {
@@ -87,12 +97,11 @@ public class Chip2manFragment extends Fragment {
                     json.append(line);
                 }
                 String finalJson = json.toString();
+                latestWeatherJson = finalJson;
                 Log.d("Json response",finalJson); // Debugging: Log the JSON response
                 getActivity().runOnUiThread(() -> updateWeatherInfo(finalJson));
             } catch (Exception e) {
-                e.printStackTrace(); // Debugging: Print stack trace for exceptions
-
-                    // Debugging: Update UI with error message for visibility
+                e.printStackTrace();
                 Log.e("Chip2manFragment", "Exception fetching weather", e);
 
 
