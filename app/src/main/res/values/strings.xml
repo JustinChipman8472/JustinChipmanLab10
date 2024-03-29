@@ -31,16 +31,16 @@
         <string-array name="city_latitudes">
             <item>43.7</item>
             <item>40.7</item>
-            <item>51.5</item>
-            <item>35.6</item>
-            <item>48.8</item>
+            <item>51.5072</item>
+            <item>35.6938401</item>
+            <item>48.8566</item>
         </string-array>
         <string-array name="city_longitudes">
             <item>-79.4</item>
             <item>-74.0</item>
-            <item>-0.1</item>
-            <item>139.6</item>
-            <item>2.3</item>
+            <item>0.1276</item>
+            <item>139.7035494</item>
+            <item>2.3522</item>
         </string-array>
 
 

@@ -25,7 +25,7 @@ import java.util.concurrent.Executors;
 
 public class Chip2manFragment extends Fragment {
 
-    private TextView weatherInfoTextView;
+    private TextView weatherInfoTextView, countryTextView, humidityTextView, lonTextView, latTextView, cityTextView, descTextView;
     private Spinner citySpinner;
     private RadioGroup temperatureUnitRadioGroup;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -38,6 +38,12 @@ public class Chip2manFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chip2man, container, false);
 
         weatherInfoTextView = view.findViewById(R.id.weatherInfoTextView);
+        countryTextView = view.findViewById(R.id.countryTextView);
+        humidityTextView = view.findViewById(R.id.humidityTextView);
+        lonTextView = view.findViewById(R.id.lonTextView);
+        latTextView = view.findViewById(R.id.latTextView);
+        cityTextView = view.findViewById(R.id.cityTextView);
+        descTextView = view.findViewById(R.id.descTextView);
         citySpinner = view.findViewById(R.id.citySpinner);
         temperatureUnitRadioGroup = view.findViewById(R.id.temperatureUnitRadioGroup);
 
@@ -100,18 +106,35 @@ public class Chip2manFragment extends Fragment {
             JSONObject jsonObject = new JSONObject(json);
             JSONObject main = jsonObject.getJSONObject("main");
             double tempKelvin = main.getDouble("temp");
+            JSONObject sys = jsonObject.getJSONObject("sys");
+            JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
+
             // Default to Celsius. Adjust based on user selection if needed.
             int selectedId = temperatureUnitRadioGroup.getCheckedRadioButtonId();
             double temp = tempKelvin - 273.15; // Convert to Celsius
+            String unit = "°C";
             if (selectedId == R.id.fahrenheitRadioButton) {
                 temp = temp * 9 / 5 + 32; // Convert to Fahrenheit if selected
+                unit = "°F";
             }
-            String input = format("Temp: %.1f", temp);
-            weatherInfoTextView.setText(input);
-            Log.d("Chip2manFragment", "Updating UI with weather info: " + input);
+            String temperature = String.format("Temperature: %.1f%s", temp, unit);
+            String country = "Country: " + sys.getString("country");
+            String humidity = "Humidity: " + main.getString("humidity") + "%";
+            String lon = "Lon: " + jsonObject.getJSONObject("coord").getString("lon");
+            String lat = "Lat: " + jsonObject.getJSONObject("coord").getString("lat");
+            String city = "City: " + jsonObject.getString("name");
+            String description = "Desc: " + weather.getString("description");
+
+            weatherInfoTextView.setText(temperature);
+            countryTextView.setText(country);
+            humidityTextView.setText(humidity);
+            lonTextView.setText(lon);
+            latTextView.setText(lat);
+            cityTextView.setText(city);
+            descTextView.setText(description);
+
         } catch (Exception e) {
-            Log.e("Chip2manFragment", "Exception fetching weather", e);
-            e.printStackTrace();
+            Log.e("Chip2manFragment", "Exception parsing weather data", e);
         }
     }
 
