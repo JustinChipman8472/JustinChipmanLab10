@@ -2,6 +2,8 @@ package justin.chipman.n01598472.jc;
 
 import static java.lang.String.format;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +50,13 @@ public class Chip2manFragment extends Fragment {
         citySpinner = view.findViewById(R.id.citySpinner);
         temperatureUnitRadioGroup = view.findViewById(R.id.temperatureUnitRadioGroup);
 
+        String savedUnit = getTemperatureUnitPreference();
+        if ("Fahrenheit".equals(savedUnit)) {
+            temperatureUnitRadioGroup.check(R.id.fahrenheitRadioButton);
+        } else {
+            temperatureUnitRadioGroup.check(R.id.celsiusRadioButton);
+        }
+
         setupSpinner();
         return view;
     }
@@ -74,11 +83,27 @@ public class Chip2manFragment extends Fragment {
         temperatureUnitRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                String unit = checkedId == R.id.celsiusRadioButton ? "Celsius" : "Fahrenheit";
+                saveTemperatureUnitPreference(unit);
+
                 if (latestWeatherJson != null && !latestWeatherJson.isEmpty()) {
                     updateWeatherInfo(latestWeatherJson);
                 }
             }
         });
+    }
+
+    private void saveTemperatureUnitPreference(String unit) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("TemperatureUnit", unit);
+        editor.apply();
+    }
+
+    private String getTemperatureUnitPreference() {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        return sharedPref.getString("TemperatureUnit", "Celsius"); // Default to Celsius
     }
 
     private void fetchWeatherData(String lat, String lon) {
@@ -118,16 +143,11 @@ public class Chip2manFragment extends Fragment {
             JSONObject sys = jsonObject.getJSONObject("sys");
             JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
 
-            double temp;
-            String unit;
-            if (temperatureUnitRadioGroup.getCheckedRadioButtonId() == R.id.celsiusRadioButton) {
-                temp = tempKelvin - 273.15; // Convert to Celsius
-                unit = "°C";
-            } else {
-                temp = (tempKelvin - 273.15) * 9 / 5 + 32; // Convert to Fahrenheit
-                unit = "°F";
-            }
-            String temperature = String.format("Temperature: %.1f%s", temp, unit);
+            String savedUnit = getTemperatureUnitPreference();
+            double temp = savedUnit.equals("Celsius") ? tempKelvin - 273.15 : (tempKelvin - 273.15) * 9 / 5 + 32;
+            String unitSymbol = savedUnit.equals("Celsius") ? "°C" : "°F";
+
+            String temperature = String.format("Temperature: %.1f%s", temp, unitSymbol);
             String country = "Country: " + sys.getString("country");
             String humidity = "Humidity: " + main.getString("humidity") + "%";
             String lon = "Lon: " + jsonObject.getJSONObject("coord").getString("lon");
