@@ -43,5 +43,16 @@
             <item>2.3522</item>
         </string-array>
 
+    <string-array name="video_titles">
+        <item>Red X BABA</item>
+        <item>Corrupted Gaunlet</item>
+        <item>Perilous Moons</item>
+    </string-array>
+    <string-array name="video_ids">
+        <item>x3Ia-IVthjc</item>
+        <item>DZInWs_WhJ4</item>
+        <item>ajS3qfZnhs4</item>
+    </string-array>
+
 
 </resources>

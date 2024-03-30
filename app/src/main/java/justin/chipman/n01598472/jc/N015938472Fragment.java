@@ -1,64 +1,105 @@
 package justin.chipman.n01598472.jc;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.widget.TextView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link N015938472Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class N015938472Fragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class N015938472Fragment extends Fragment implements VideoListAdapter.ItemClickListener {
 
     public N015938472Fragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment3.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static N015938472Fragment newInstance(String param1, String param2) {
-        N015938472Fragment fragment = new N015938472Fragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private WebView videoWebView;
+    private RecyclerView videoListRecyclerView;
+    private VideoListAdapter adapter;
+    private List<VideoDetails> videoDetailsList; // A hypothetical class to hold video data.
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_n015938472, container, false);
+
+        videoWebView = view.findViewById(R.id.videoWebView);
+        videoListRecyclerView = view.findViewById(R.id.videoListRecyclerView);
+
+        // Configure the WebView settings
+        WebSettings webSettings = videoWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+
+        // Initialize the RecyclerView and adapter
+        videoListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        initializeVideoList(); // Initialize your list of videos
+        adapter = new VideoListAdapter(getContext(), videoDetailsList);
+        adapter.setClickListener(this);
+        videoListRecyclerView.setAdapter(adapter);
+
+        return view;
+    }
+
+
+    private void initializeVideoList() {
+        videoDetailsList = new ArrayList<>();
+        // Get video titles from strings.xml
+        String[] videoTitles = getResources().getStringArray(R.array.video_titles);
+        String[] videoIds = getResources().getStringArray(R.array.video_ids);
+
+        // Check if the titles and IDs arrays are of the same length to avoid IndexOutOfBoundsException
+        if (videoTitles.length != videoIds.length) {
+            throw new IllegalStateException("The length of video titles and video IDs must match.");
+        }
+
+        // Combine titles and IDs into videoDetailsList
+        for (int i = 0; i < videoTitles.length; i++) {
+            videoDetailsList.add(new VideoDetails(videoTitles[i], videoIds[i]));
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_n015938472, container, false);
+    public void onItemClick(View view, int position) {
+        VideoDetails selectedVideo = videoDetailsList.get(position);
+        String videoId = selectedVideo.getVideoId();
+        playYouTubeVideo(videoId);
+    }
+
+    private void playYouTubeVideo(String videoId) {
+        String frameVideo = "<html><body>YouTube video .. <br> <iframe width=\"320\" height=\"180\" src=\"https://www.youtube.com/embed/" + videoId + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+        videoWebView.loadData(frameVideo, "text/html", "utf-8");
+    }
+
+    @Override
+    public void onDestroy() {
+        if (videoWebView != null) {
+            videoWebView.destroy();
+        }
+        super.onDestroy();
+    }
+
+    // Inner class for Video details
+    public static class VideoDetails {
+        private final String title;
+        private final String videoId;
+
+        public VideoDetails(String title, String videoId) {
+            this.title = title;
+            this.videoId = videoId;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getVideoId() {
+            return videoId;
+        }
     }
 }

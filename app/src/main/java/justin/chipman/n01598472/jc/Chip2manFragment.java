@@ -118,12 +118,13 @@ public class Chip2manFragment extends Fragment {
             JSONObject sys = jsonObject.getJSONObject("sys");
             JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
 
-            // Default to Celsius. Adjust based on user selection if needed.
-            int selectedId = temperatureUnitRadioGroup.getCheckedRadioButtonId();
-            double temp = tempKelvin - 273.15; // Convert to Celsius
-            String unit = "°C";
-            if (selectedId == R.id.fahrenheitRadioButton) {
-                temp = temp * 9 / 5 + 32; // Convert to Fahrenheit if selected
+            double temp;
+            String unit;
+            if (temperatureUnitRadioGroup.getCheckedRadioButtonId() == R.id.celsiusRadioButton) {
+                temp = tempKelvin - 273.15; // Convert to Celsius
+                unit = "°C";
+            } else {
+                temp = (tempKelvin - 273.15) * 9 / 5 + 32; // Convert to Fahrenheit
                 unit = "°F";
             }
             String temperature = String.format("Temperature: %.1f%s", temp, unit);
