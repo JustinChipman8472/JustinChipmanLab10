@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class N015938472Fragment extends Fragment implements VideoListAdapter.ItemClickListener {
@@ -22,7 +24,7 @@ public class N015938472Fragment extends Fragment implements VideoListAdapter.Ite
     private WebView videoWebView;
     private RecyclerView videoListRecyclerView;
     private VideoListAdapter adapter;
-    private List<VideoDetails> videoDetailsList; // A hypothetical class to hold video data.
+    private List<String> videoTitles;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,75 +33,54 @@ public class N015938472Fragment extends Fragment implements VideoListAdapter.Ite
         videoWebView = view.findViewById(R.id.videoWebView);
         videoListRecyclerView = view.findViewById(R.id.videoListRecyclerView);
 
-        // Configure the WebView settings
-        WebSettings webSettings = videoWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
+        // Initialize the list of video titles
+        videoTitles = Arrays.asList(getResources().getStringArray(R.array.video_titles));
 
-        // Initialize the RecyclerView and adapter
+        // Set up the RecyclerView
         videoListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        initializeVideoList(); // Initialize your list of videos
-        adapter = new VideoListAdapter(getContext(), videoDetailsList);
+        adapter = new VideoListAdapter(getContext(), videoTitles);
         adapter.setClickListener(this);
         videoListRecyclerView.setAdapter(adapter);
+
+        // Set up the WebView
+        videoWebView.getSettings().setJavaScriptEnabled(true);
+        videoWebView.getSettings().setDomStorageEnabled(true);
+        videoWebView.setVisibility(View.GONE); // Initially hide the WebView
 
         return view;
     }
 
-
-    private void initializeVideoList() {
-        videoDetailsList = new ArrayList<>();
-        // Get video titles from strings.xml
-        String[] videoTitles = getResources().getStringArray(R.array.video_titles);
-        String[] videoIds = getResources().getStringArray(R.array.video_ids);
-
-        // Check if the titles and IDs arrays are of the same length to avoid IndexOutOfBoundsException
-        if (videoTitles.length != videoIds.length) {
-            throw new IllegalStateException("The length of video titles and video IDs must match.");
-        }
-
-        // Combine titles and IDs into videoDetailsList
-        for (int i = 0; i < videoTitles.length; i++) {
-            videoDetailsList.add(new VideoDetails(videoTitles[i], videoIds[i]));
-        }
-    }
-
     @Override
     public void onItemClick(View view, int position) {
-        VideoDetails selectedVideo = videoDetailsList.get(position);
-        String videoId = selectedVideo.getVideoId();
-        playYouTubeVideo(videoId);
+        // Here you will need to retrieve the correct YouTube video URL or ID
+        String videoUrl = getVideoUrl(position); // Implement this method based on your data
+        playYouTubeVideo(videoUrl);
     }
 
-    private void playYouTubeVideo(String videoId) {
-        String frameVideo = "<html><body>YouTube video .. <br> <iframe width=\"320\" height=\"180\" src=\"https://www.youtube.com/embed/" + videoId + "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
-        videoWebView.loadData(frameVideo, "text/html", "utf-8");
+    private String getVideoUrl(int position) {
+        // Retrieve the array of video IDs from strings.xml
+        String[] videoIds = getResources().getStringArray(R.array.video_ids);
+        // Use the position to access the corresponding video ID
+        if (position >= 0 && position < videoIds.length) {
+            String videoId = videoIds[position];
+            // Return the proper YouTube embed URL format
+            return "https://www.youtube.com/embed/" + videoId;
+        } else {
+        // Handle invalid position if necessary
+        return ""; // Return empty or a default video URL
+        }
+    }
+
+    private void playYouTubeVideo(String videoUrl) {
+        videoWebView.setVisibility(View.VISIBLE);
+        videoWebView.loadUrl(videoUrl); // Load the video URL
     }
 
     @Override
     public void onDestroy() {
+        super.onDestroy();
         if (videoWebView != null) {
             videoWebView.destroy();
-        }
-        super.onDestroy();
-    }
-
-    // Inner class for Video details
-    public static class VideoDetails {
-        private final String title;
-        private final String videoId;
-
-        public VideoDetails(String title, String videoId) {
-            this.title = title;
-            this.videoId = videoId;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getVideoId() {
-            return videoId;
         }
     }
 }

@@ -44,9 +44,9 @@
         </string-array>
 
     <string-array name="video_titles">
-        <item>Red X BABA</item>
-        <item>Corrupted Gaunlet</item>
-        <item>Perilous Moons</item>
+        <item>red_x</item>
+        <item>corrupted_gaunlet</item>
+        <item>perilous_moons</item>
     </string-array>
     <string-array name="video_ids">
         <item>x3Ia-IVthjc</item>
