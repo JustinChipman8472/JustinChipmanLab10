@@ -13,6 +13,10 @@
     <string name="justin_chipman_n01598472">Justin Chipman N01598472</string>
     <string name="celsius">Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
+    <string name="saved_ad_click_count">Saved count</string>
+    <string name="channel_name">fragment4</string>
+    <string name="channel_description">practicing java</string>
+    <string name="channel_id">location_channel</string>
 
     <string-array name="image_urls_array">
         <item>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRabWRuZC53FW8cGFHJk0sjDmJ_-YtxzSRvyAL4WnHTu_-7_ejPmm39v2upcmoDC44oYRDPcCFw7QvUFGe4_W2YAVulO554uQZsenc8oUo</item>

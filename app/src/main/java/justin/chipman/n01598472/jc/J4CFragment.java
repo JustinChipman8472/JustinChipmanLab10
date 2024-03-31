@@ -1,74 +1,67 @@
 package justin.chipman.n01598472.jc;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
+import android.widget.Toast;
 import androidx.fragment.app.Fragment;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 public class J4CFragment extends Fragment {
-
-    private TextView clockTextView, latitudeTextView, longitudeTextView;
+    private TextView dateTimeDisplay;
+    private AdView mAdView;
     private int adClickCounter = 0;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private Handler handler = new Handler();
     private Runnable runnable;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_j4c, container, false);
 
-        clockTextView = view.findViewById(R.id.clockTextView);
-        latitudeTextView = view.findViewById(R.id.latitudeTextView);
-        longitudeTextView = view.findViewById(R.id.longitudeTextView);
+        dateTimeDisplay = view.findViewById(R.id.clockTextView);
+        mAdView = view.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
-        // Initialize the clock updater
-        initializeClock();
-
-        Button locationButton = view.findViewById(R.id.locationButton);
-        locationButton.setOnClickListener(v -> {
-            // Here you should handle location permission request and retrieve location
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdClicked() {
+                super.onAdClicked();
+                adClickCounter++;
+                Toast.makeText(getActivity(), "Justin Chipman: " + adClickCounter, Toast.LENGTH_LONG).show();
+            }
         });
 
-        // Placeholder frame layout for the ad, replace this with your AdView
-        FrameLayout adPlaceholder = view.findViewById(R.id.adPlaceholder);
-        adPlaceholder.setOnClickListener(v -> {
-            adClickCounter++;
-            // Here you would handle the ad click event
-        });
-
+        updateDateTime();
         return view;
     }
 
-    private void initializeClock() {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+    private void updateDateTime() {
         runnable = new Runnable() {
             @Override
             public void run() {
-                clockTextView.setText(dateFormat.format(new Date()));
+                String currentTime = new java.text.SimpleDateFormat("YYYY:MM:dd HH:mm:ss", java.util.Locale.getDefault()).format(new java.util.Date());
+                dateTimeDisplay.setText(currentTime);
                 handler.postDelayed(this, 1000);
             }
         };
-        handler.post(runnable);
+        handler.postDelayed(runnable, 1000);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
     }
 }
+
+
+
