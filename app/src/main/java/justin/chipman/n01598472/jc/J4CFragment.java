@@ -1,23 +1,59 @@
 package justin.chipman.n01598472.jc;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.material.snackbar.Snackbar;
+import android.Manifest;
+
 
 public class J4CFragment extends Fragment {
+    private FusedLocationProviderClient fusedLocationClient;
+    private int permissionDeniedCount = 0;
     private TextView dateTimeDisplay;
     private AdView mAdView;
     private int adClickCounter = 0;
     private Handler handler = new Handler();
     private Runnable runnable;
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                View view = getView();
+                if (isGranted) {
+                    // Permission is granted. Continue with location access.
+                    getLastLocation(view);
+                } else {
+                    // Explain to the user that the feature is unavailable because
+                    // the features require a permission that the user has denied.
+                    permissionDeniedCount++;
+                    if (permissionDeniedCount > 2) {
+
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    intent.setData(Uri.fromParts("package", requireActivity().getPackageName(), null));
+                                    startActivity(intent);
+
+                    } else {
+                        Snackbar.make(view, "Permission denied", Snackbar.LENGTH_INDEFINITE)
+                                .setAction("Dismiss", null).show();
+                    }
+                }
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,6 +64,8 @@ public class J4CFragment extends Fragment {
         mAdView = view.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        Button locationButton = view.findViewById(R.id.locationButton);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
         mAdView.setAdListener(new AdListener() {
             @Override
@@ -39,7 +77,30 @@ public class J4CFragment extends Fragment {
         });
 
         updateDateTime();
+
+        locationButton.setOnClickListener(v -> {
+            if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Additional rationale should be shown (optional)
+            }
+            // Directly ask for the permissions
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
+        });
         return view;
+    }
+
+    private void getLastLocation(View view) {
+        fusedLocationClient.getLastLocation().addOnSuccessListener(requireActivity(), location -> {
+            if (location != null) {
+                // Use the location object
+                String locationStr = "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude();
+                Snackbar.make(view, locationStr, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", v -> {}).show();
+            } else {
+                // Handle the situation where location is null
+                Snackbar.make(view, "Location not determined", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", null).show();
+            }
+        });
     }
 
     private void updateDateTime() {
