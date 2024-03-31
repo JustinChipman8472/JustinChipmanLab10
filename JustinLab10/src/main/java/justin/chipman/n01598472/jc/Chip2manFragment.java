@@ -33,7 +33,6 @@ public class Chip2manFragment extends Fragment {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private String latestWeatherJson;
 
-    // Replace YOUR_API_KEY with your actual OpenWeatherMap API key
     private String API_KEY;
 
     @Override
