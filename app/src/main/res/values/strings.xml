@@ -27,26 +27,30 @@
             <item>London</item>
             <item>Tokyo</item>
             <item>Paris</item>
+            <item>Warsaw</item>
         </string-array>
         <string-array name="city_latitudes">
             <item>43.7</item>
             <item>40.7</item>
-            <item>51.5072</item>
+            <item>51.509865</item>
             <item>35.6938401</item>
             <item>48.8566</item>
+            <item>52.2297</item>
         </string-array>
         <string-array name="city_longitudes">
             <item>-79.4</item>
             <item>-74.0</item>
-            <item>0.1276</item>
+            <item>-0.118092</item>
             <item>139.7035494</item>
             <item>2.3522</item>
+            <item>21.0122</item>
+
         </string-array>
 
     <string-array name="video_titles">
-        <item>red_x</item>
-        <item>corrupted_gaunlet</item>
-        <item>perilous_moons</item>
+        <item>Red X BABA</item>
+        <item>Corrupted Gauntlet</item>
+        <item>Perilous Moons</item>
     </string-array>
     <string-array name="video_ids">
         <item>x3Ia-IVthjc</item>
