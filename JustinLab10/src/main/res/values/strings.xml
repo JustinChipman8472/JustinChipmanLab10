@@ -1,0 +1,91 @@
+<!-- justin chipman n01598472 -->
+<resources>
+    <string name="app_name">JustinLab10</string>
+    <string name="design_navigation_drawer_app">Design Navigation Drawer app</string>
+    <string name="justin_copywrite">by Justin Chipman n01598472 ©</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="justin">Justin</string>
+    <string name="chipman">Chipman</string>
+    <string name="n01598472">N01598472</string>
+    <string name="jc">JC</string>
+    <string name="download_image">Download Image</string>
+    <string name="select_image">Select Image</string>
+    <string name="justin_chipman_n01598472">Justin Chipman N01598472</string>
+    <string name="celsius">Celsius</string>
+    <string name="fahrenheit">Fahrenheit</string>
+    <string name="saved_ad_click_count">Saved count</string>
+    <string name="channel_name">fragment4</string>
+    <string name="channel_description">practicing java</string>
+    <string name="channel_id">location_channel</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="justin_chipman">"Justin Chipman: "</string>
+    <string name="latitude">"Latitude: "</string>
+    <string name="longitude">", Longitude: "</string>
+    <string name="location_not_determined">Location not determined</string>
+    <string name="device_location">Device Location</string>
+    <string name="api_key">4a9109aa76c6113b14442edfa8e68d27</string>
+    <string name="country">"Country: "</string>
+    <string name="humidity">"Humidity: "</string>
+    <string name="lon">"Lon: "</string>
+    <string name="lat">"Lat: "</string>
+    <string name="city">"City: "</string>
+    <string name="desc">"Desc: "</string>
+    <string name="error_downloading_image">Error downloading image</string>
+    <string name="time">Time</string>
+    <string name="location">Location</string>
+    <string name="temperature">Temperature: --</string>
+    <string name="lat_dash">Lat: --</string>
+    <string name="lon_dash">Lon: --</string>
+    <string name="humidity_dash">Humidity: --%</string>
+    <string name="country_dash">Country: --</string>
+    <string name="city_dash">City: --</string>
+    <string name="desc_dash">Desc: --</string>
+
+    <string-array name="image_urls_array">
+        <item>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRabWRuZC53FW8cGFHJk0sjDmJ_-YtxzSRvyAL4WnHTu_-7_ejPmm39v2upcmoDC44oYRDPcCFw7QvUFGe4_W2YAVulO554uQZsenc8oUo</item>
+        <item>https://upload.wikimedia.org/wikipedia/en/thumb/f/f4/Daffy_Duck.svg/1200px-Daffy_Duck.svg.png</item>
+        <item>https://upload.wikimedia.org/wikipedia/en/thumb/8/88/Porky_Pig.svg/1200px-Porky_Pig.svg.png</item>
+        <item>https://m.media-amazon.com/images/I/517COP1I57L._AC_UF894,1000_QL80_.jpg</item>
+    </string-array>
+
+        <string-array name="cities">
+            <item>Toronto</item>
+            <item>New York</item>
+            <item>London</item>
+            <item>Tokyo</item>
+            <item>Paris</item>
+            <item>Warsaw</item>
+        </string-array>
+        <string-array name="city_latitudes">
+            <item>43.7</item>
+            <item>40.7</item>
+            <item>51.509865</item>
+            <item>35.6938401</item>
+            <item>48.8566</item>
+            <item>52.2297</item>
+        </string-array>
+        <string-array name="city_longitudes">
+            <item>-79.4</item>
+            <item>-74.0</item>
+            <item>-0.118092</item>
+            <item>139.7035494</item>
+            <item>2.3522</item>
+            <item>21.0122</item>
+
+        </string-array>
+
+    <string-array name="video_titles">
+        <item>Red X BABA</item>
+        <item>Corrupted Gauntlet</item>
+        <item>Perilous Moons</item>
+    </string-array>
+    <string-array name="video_ids">
+        <item>x3Ia-IVthjc</item>
+        <item>DZInWs_WhJ4</item>
+        <item>ajS3qfZnhs4</item>
+    </string-array>
+
+
+</resources>
