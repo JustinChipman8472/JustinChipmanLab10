@@ -95,15 +95,15 @@ public class Chip2manFragment extends Fragment {
     }
 
     private void saveTemperatureUnitPreference(String unit) {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.weatherprefs), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("TemperatureUnit", unit);
+        editor.putString(getString(R.string.temperatureunit), unit);
         editor.apply();
     }
 
     private String getTemperatureUnitPreference() {
-        SharedPreferences sharedPref = getActivity().getSharedPreferences("WeatherPrefs", Context.MODE_PRIVATE);
-        return sharedPref.getString("TemperatureUnit", "Celsius"); // Default to Celsius
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.weatherprefs), Context.MODE_PRIVATE);
+        return sharedPref.getString(getString(R.string.temperatureunit), getString(R.string.celsius)); // Default to Celsius
     }
 
     private void fetchWeatherData(String lat, String lon) {
@@ -126,10 +126,7 @@ public class Chip2manFragment extends Fragment {
                 Log.d("Json response",finalJson); // Debugging: Log the JSON response
                 getActivity().runOnUiThread(() -> updateWeatherInfo(finalJson));
             } catch (Exception e) {
-                e.printStackTrace();
                 Log.e("Chip2manFragment", "Exception fetching weather", e);
-
-
             }
         });
     }
@@ -144,8 +141,8 @@ public class Chip2manFragment extends Fragment {
             JSONObject weather = jsonObject.getJSONArray("weather").getJSONObject(0);
 
             String savedUnit = getTemperatureUnitPreference();
-            double temp = savedUnit.equals("Celsius") ? tempKelvin - 273.15 : (tempKelvin - 273.15) * 9 / 5 + 32;
-            String unitSymbol = savedUnit.equals("Celsius") ? "°C" : "°F";
+            double temp = savedUnit.equals(getString(R.string.celsius)) ? tempKelvin - 273.15 : (tempKelvin - 273.15) * 9 / 5 + 32;
+            String unitSymbol = savedUnit.equals(getString(R.string.celsius)) ? getString(R.string.c) : getString(R.string.f);
 
             String temperature = String.format(getString(R.string.temperature_1f_s), temp, unitSymbol);
             String country = getString(R.string.country) + sys.getString("country");
@@ -154,7 +151,7 @@ public class Chip2manFragment extends Fragment {
             String lat = getString(R.string.lat) + jsonObject.getJSONObject("coord").getString("lat");
             String city = getString(R.string.city) + jsonObject.getString("name");
 
-            String description = getString(R.string.desc) + weather.getString("description");
+            String description = getString(R.string.desc) + weather.getString("descriipton");
 
             weatherInfoTextView.setText(temperature);
             countryTextView.setText(country);

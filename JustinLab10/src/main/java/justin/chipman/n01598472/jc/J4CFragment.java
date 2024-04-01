@@ -112,7 +112,7 @@ public class J4CFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), "CHANNEL_ID")
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(requireContext(), getString(R.string.channel_id))
                 .setSmallIcon(R.drawable.ic_location)
                 .setContentTitle(getString(R.string.device_location))
                 .setContentText(locationText)

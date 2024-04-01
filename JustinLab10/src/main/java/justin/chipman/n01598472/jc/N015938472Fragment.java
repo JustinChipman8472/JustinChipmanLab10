@@ -65,8 +65,7 @@ public class N015938472Fragment extends Fragment implements VideoListAdapter.Ite
             // Return the proper YouTube embed URL format
             return "https://www.youtube.com/embed/" + videoId;
         } else {
-
-        return "";
+            return "";
         }
     }
 
