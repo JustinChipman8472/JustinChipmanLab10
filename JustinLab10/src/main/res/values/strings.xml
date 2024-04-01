@@ -43,10 +43,6 @@
     <string name="city_dash">City: --</string>
     <string name="desc_dash" translatable="false">Desc: --</string>
     <string name="temperature_1f_s">Temperature: %.1f%s</string>
-    <string name="weatherprefs">WeatherPrefs</string>
-    <string name="temperatureunit">TemperatureUnit</string>
-    <string name="c">°C</string>
-    <string name="f">°F</string>
 
     <string-array name="image_urls_array">
         <item>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRabWRuZC53FW8cGFHJk0sjDmJ_-YtxzSRvyAL4WnHTu_-7_ejPmm39v2upcmoDC44oYRDPcCFw7QvUFGe4_W2YAVulO554uQZsenc8oUo</item>
