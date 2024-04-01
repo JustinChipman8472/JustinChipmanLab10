@@ -84,7 +84,7 @@ public class Chip2manFragment extends Fragment {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
-                String unit = checkedId == R.id.juscelsiusRadioButton ? "Celsius" : "Fahrenheit";
+                String unit = checkedId == R.id.juscelsiusRadioButton ? getString(R.string.celsius) : getString(R.string.fahrenheit);
                 saveTemperatureUnitPreference(unit);
 
                 if (latestWeatherJson != null && !latestWeatherJson.isEmpty()) {
@@ -147,12 +147,13 @@ public class Chip2manFragment extends Fragment {
             double temp = savedUnit.equals("Celsius") ? tempKelvin - 273.15 : (tempKelvin - 273.15) * 9 / 5 + 32;
             String unitSymbol = savedUnit.equals("Celsius") ? "°C" : "°F";
 
-            String temperature = String.format("Temperature: %.1f%s", temp, unitSymbol);
+            String temperature = String.format(getString(R.string.temperature_1f_s), temp, unitSymbol);
             String country = getString(R.string.country) + sys.getString("country");
             String humidity = getString(R.string.humidity) + main.getString("humidity") + "%";
             String lon = getString(R.string.lon) + jsonObject.getJSONObject("coord").getString("lon");
             String lat = getString(R.string.lat) + jsonObject.getJSONObject("coord").getString("lat");
             String city = getString(R.string.city) + jsonObject.getString("name");
+
             String description = getString(R.string.desc) + weather.getString("description");
 
             weatherInfoTextView.setText(temperature);

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">JustinLab10</string>
+    <string name="design_navigation_drawer_app">Application Tiroir de navigation de conception</string>
+    <string name="download_image">télécharger l\'image</string>
+    <string name="select_image">sélectionner une image</string>
+    <string name="fahrenheit">degrés Fahrenheit</string>
+    <string name="saved_ad_click_count">nombre enregistré</string>
+    <string name="permission_denied">permission refusée</string>
+    <string name="dismiss">rejeter</string>
+    <string name="location_not_determined">emplacement non déterminé</string>
+    <string name="device_location">emplacement de l\'appareil</string>
+    <string name="country">pays:</string>
+    <string name="humidity">humidité:</string>
+    <string name="city">ville:</string>
+    <string name="error_downloading_image">erreur de téléchargement de l\'image</string>
+    <string name="time">temps</string>
+    <string name="location">emplacement</string>
+    <string name="temperature">température: --</string>
+    <string name="humidity_dash">humidité: --%</string>
+    <string name="country_dash">Pays: --</string>
+    <string name="city_dash">ville: --</string>
+</resources>
